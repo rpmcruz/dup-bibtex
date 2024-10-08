@@ -11,7 +11,7 @@ for line in open(args.input):
     match = re.search(r'@\w+\{([^,]+),', line)
     if match:
         entry = match.group(1)
-    match = re.search(r'^\s*title\s*=\s*\{([^\}]+)\},', line)
+    match = re.search(r'^\s*title\s*=\s*["]?\s*\{([^\}]+)\}\s*["]?\s*,', line)
     if match:
         title = match.group(1)
         d[entry] = title.lower()
