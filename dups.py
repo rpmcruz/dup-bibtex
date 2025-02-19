@@ -1,20 +1,21 @@
 import argparse
 parser = argparse.ArgumentParser()
-parser.add_argument('input')
+parser.add_argument('input', nargs='+')
 args = parser.parse_args()
 
 import re
 
 d = {}
 
-for line in open(args.input):
-    match = re.search(r'@\w+\{([^,]+),', line)
-    if match:
-        entry = match.group(1)
-    match = re.search(r'^\s*title\s*=\s*["]?\s*\{(.+)\}\s*["]?\s*,', line)
-    if match:
-        title = match.group(1)
-        d[entry] = title.lower()
+for file in args.input:
+    for line in open(file):
+        match = re.search(r'@\w+\{([^,]+),', line)
+        if match:
+          entry = match.group(1)
+        match = re.search(r'^\s*title\s*=\s*["]?\s*\{(.+)\}\s*["]?\s*,', line)
+        if match:
+            title = match.group(1)
+            d[entry] = title.lower()
 
 import difflib
 count = 0
